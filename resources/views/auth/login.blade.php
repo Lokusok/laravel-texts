@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Вход">
     <div class="mb-[20px] pb-[20px] border-b border-b-gray-700">
         <h3 class="font-bold text-[20px]">Войти в админку</h3>
     </div>
