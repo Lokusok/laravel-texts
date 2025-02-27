@@ -32,10 +32,14 @@ class ExportGenerator
         );
 
         foreach ($song->quatrains as $quatrain) {
-            $section->addText(
-                strip_tags($quatrain['body']),
-                ['name' => 'Tahoma', 'size' => 14],
-            );
+            $texts = explode("\n", strip_tags($this->insertNewLinesAfterOuterTags($quatrain['body'])));
+
+            foreach ($texts as $text) {
+                $section->addText(
+                    $text,
+                    ['name' => 'Tahoma', 'size' => 14],
+                );
+            }
         }
 
         $writer = IOFactory::createWriter($phpWord);
@@ -45,5 +49,14 @@ class ExportGenerator
         $writer->save($pathToDocx);
 
         return $pathToDocx;
+    }
+
+    private function insertNewLinesAfterOuterTags(string $html): string
+    {
+        $pattern = '/<\/[^>]+>\s*/';
+
+        $result = preg_replace($pattern, "$0\n", $html);
+
+        return $result;
     }
 }

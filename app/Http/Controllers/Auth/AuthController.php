@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\AuthenticateRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class AuthController extends Controller
+class AuthController
 {
     public function login()
     {
@@ -20,11 +19,11 @@ class AuthController extends Controller
         $user = User::where('name', $request->input('login'))->first();
 
         if (! $user) {
-            abort(400);
+            return redirect()->back();
         }
 
         if (! Hash::check($request->input('password'), $user->password)) {
-            abort(401);
+            return redirect()->back();
         }
 
         Auth::login($user);

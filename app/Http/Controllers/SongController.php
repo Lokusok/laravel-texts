@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\DTO\SongDto;
 use App\Http\Requests\Songs\StoreSongRequest;
+use App\Http\Requests\Songs\UpdateSongRequest;
 use App\Models\Song;
 use App\Services\ExportGenerator;
 use App\Services\SongService;
 use App\Services\Zippify;
 use Illuminate\Support\Str;
 
-class SongController extends Controller
+class SongController
 {
     public function __construct(
         private ExportGenerator $exportGenerator,
@@ -20,20 +21,16 @@ class SongController extends Controller
 
     public function index()
     {
-        $songs = Song::orderBy('id', 'DESC')->get(['id', 'title', 'created_at']);
+        $songs = Song::orderBy('id', 'DESC')->paginate(perPage: 4, columns: ['id', 'title', 'created_at']);
 
-        return view('songs.index', [
-            'songs' => $songs,
-        ]);
+        return view('songs.index', compact('songs'));
     }
 
     public function show(Song $song)
     {
         $song->load('quatrains');
 
-        return view('songs.show', [
-            'song' => $song,
-        ]);
+        return view('songs.show', compact('song'));
     }
 
     public function create()
@@ -55,6 +52,20 @@ class SongController extends Controller
         $song->delete();
 
         return redirect()->route('songs.index')->with('success', 'Текст успешно удалён');
+    }
+
+    public function edit(Song $song)
+    {
+        return view('songs.edit', compact('song'));
+    }
+
+    public function update(UpdateSongRequest $request, Song $song)
+    {
+        $newSong = SongDto::fromRequest($request);
+
+        $this->songService->update($song, $newSong);
+
+        return redirect()->route('songs.show', [$song])->with('success', 'Текст успешно обновлён');
     }
 
     public function pdf(Song $song)

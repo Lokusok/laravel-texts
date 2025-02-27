@@ -23,4 +23,17 @@ class SongService
             }
         });
     }
+
+    public function update(Song $song, SongDto $songDto)
+    {
+        DB::transaction(function () use ($song, $songDto) {
+            $song->update([
+                'title' => $songDto->title,
+            ]);
+
+            foreach ($songDto->quatrains as $idx => $quatrain) {
+                $song->quatrains[$idx]->update($quatrain);
+            }
+        });
+    }
 }

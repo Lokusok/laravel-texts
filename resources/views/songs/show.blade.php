@@ -1,4 +1,6 @@
 <x-layout title="Текст {{ $song->id }}">
+    <x-alerts.success />
+
     <div class="flex justify-between items-center gap-x-[30px] mb-[30px] border-b border-b-gray-700">
         <h1 class="font-bold text-[30px]">
             {{ $song->title }}
@@ -27,7 +29,7 @@
         </div>
     </div>
 
-    <div class="mb-[30px] flex gap-x-[20px]">
+    <div class="mb-[30px] flex gap-x-[20px] items-center">
         <div>
             <form action="{{ route('songs.destroy', [$song]) }}" method="POST">
                 @csrf
@@ -37,6 +39,12 @@
                     Удалить
                 </button>
             </form>
+        </div>
+
+        <div>
+            <a href="{{ route('songs.edit', [$song]) }}" class="bg-teal-700 hover:bg-teal-600 active:opacity-50 text-white font-bold rounded-md px-3 py-1 cursor-pointer">
+                Изменить
+            </a>
         </div>
     </div>
 

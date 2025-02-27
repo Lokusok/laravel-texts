@@ -27,4 +27,8 @@
             Текстов нет
         @endforelse
     </div>
+
+    <div class="mt-[60px]">
+        {{ $songs->links() }}
+    </div>
 </x-layout>
