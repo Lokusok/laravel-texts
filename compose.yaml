@@ -1,0 +1,17 @@
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./volumes/db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  redis:
+    image: redis:7.4
+    volumes:
+      - ./volumes/redis_data:/data
+    ports:
+      - "6379:6379"

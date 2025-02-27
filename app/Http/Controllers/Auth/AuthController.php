@@ -6,6 +6,7 @@ use App\Http\Requests\Auth\AuthenticateRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\MessageBag;
 
 class AuthController
 {
@@ -23,7 +24,12 @@ class AuthController
         }
 
         if (! Hash::check($request->input('password'), $user->password)) {
-            return redirect()->back();
+            $messageBag = new MessageBag([
+                'login' => __('Неверные данные'),
+                'password' => __('Неверные данные'),
+            ]);
+
+            return redirect()->back()->withErrors($messageBag)->withInput($request->all());
         }
 
         Auth::login($user);

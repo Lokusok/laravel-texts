@@ -17,6 +17,7 @@
                         ])
                         type="text"
                         name="login"
+                        value="{{ old('login') }}"
                     >
 
                     <div class="mt-[10px] text-red-500 text-[12px]">
