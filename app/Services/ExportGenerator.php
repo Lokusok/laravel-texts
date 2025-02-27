@@ -11,7 +11,7 @@ class ExportGenerator
 {
     public function generatePdf(SongDto $song, ?string $fileName = null): string
     {
-        $pathToPdf = storage_path($fileName);
+        $pathToPdf = storage_path($fileName ?? uniqid() . '.pdf');
 
         pdf()
             ->view('songs.formats.pdf', compact('song'))
