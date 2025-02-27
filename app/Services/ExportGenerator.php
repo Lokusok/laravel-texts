@@ -33,7 +33,7 @@ class ExportGenerator
 
         foreach ($song->quatrains as $quatrain) {
             $section->addText(
-                $quatrain['body'],
+                strip_tags($quatrain['body']),
                 ['name' => 'Tahoma', 'size' => 14],
             );
         }

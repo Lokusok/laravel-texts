@@ -9,7 +9,6 @@ use App\Services\ExportGenerator;
 use App\Services\SongService;
 use App\Services\Zippify;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 
 class SongController extends Controller
 {
@@ -71,7 +70,9 @@ class SongController extends Controller
         $pathToPdf = $this->exportGenerator->generatePdf($songDto, $pdfName);
         $pathZip = $this->zippify->handle($pathToPdf, $pdfName);
 
-        return response()->download($pathZip);
+        unlink($pathToPdf);
+
+        return response()->download($pathZip)->deleteFileAfterSend(true);
     }
 
     public function docx(Song $song)
@@ -87,6 +88,8 @@ class SongController extends Controller
         $pathToDocx = $this->exportGenerator->generateDocx($songDto, $docxName);
         $pathZip = $this->zippify->handle($pathToDocx, $docxName);
 
-        return response()->download($pathZip);
+        unlink($pathToDocx);
+
+        return response()->download($pathZip)->deleteFileAfterSend(true);
     }
 }

@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Все текста">
     <x-alerts.success />
 
     <div class="flex flex-col gap-y-[30px]">

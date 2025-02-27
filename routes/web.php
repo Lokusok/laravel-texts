@@ -15,9 +15,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/songs/{song}/pdf', 'pdf')->name('songs.pdf');
         Route::post('/songs/{song}/docx', 'docx')->name('songs.docx');
     });
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
 
 Route::middleware('guest')->controller(AuthController::class)->group(function () {
     Route::get('/login', 'login')->name('auth.login');
     Route::post('/login', 'authenticate')->name('auth.authenticate');
 });
+

@@ -31,4 +31,11 @@ class AuthController extends Controller
 
         return redirect()->route('songs.index')->with('success', 'Вход выполнен успешно');
     }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->route('auth.login');
+    }
 }

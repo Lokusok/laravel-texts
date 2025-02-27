@@ -1,7 +1,8 @@
-<x-layout>
+<x-layout title="Создать текст">
     <x-alerts.success />
 
     <form
+        id="create-form"
         class="flex flex-col gap-y-3"
         action="{{ route('songs.store') }}"
         method="POST"
@@ -10,10 +11,13 @@
 
         <div class="mb-[20px] pb-[20px] border-b border-b-gray-700">
             <label>
-                Название песни:
+                Название текста:
 
                 <input
-                    class="px-3 py-1 border border-gray-400"
+                    @class([
+                        "px-3 py-1 border border-gray-400",
+                        "border border-red-500" => $errors->has('title'),
+                    ])
                     type="text"
                     name="title"
                 >
@@ -21,9 +25,15 @@
         </div>
 
         <div class="flex gap-x-3 items-center">
+            <div>
+                <div data-to="quatrain_1" class="wysiwyg"></div>
+            </div>
+
             <textarea
                 class="p-3 border border-gray-400 resize-none"
+                id="quatrain_1"
                 name="quatrain_1"
+                hidden
             ></textarea>
             <label>
                 Порядок:
@@ -39,9 +49,15 @@
         </div>
 
         <div class="flex gap-x-3 items-center">
+            <div>
+                <div data-to="quatrain_2" class="wysiwyg"></div>
+            </div>
+
             <textarea
                 class="p-3 border border-gray-400 resize-none"
+                id="quatrain_2"
                 name="quatrain_2"
+                hidden
             ></textarea>
             <label>
                 Порядок:
@@ -57,9 +73,15 @@
         </div>
 
         <div class="flex gap-x-3 items-center">
+            <div>
+                <div data-to="quatrain_3" class="wysiwyg"></div>
+            </div>
+
             <textarea
                 class="p-3 border border-gray-400 resize-none"
+                id="quatrain_3"
                 name="quatrain_3"
+                hidden
             ></textarea>
             <label>
                 Порядок:
@@ -83,4 +105,31 @@
             </button>
         </div>
     </form>
+
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+
+        <script>
+            const createForm = document.getElementById('create-form');
+            const wysiwygs = document.querySelectorAll('.wysiwyg');
+            const quills = [];
+
+            wysiwygs.forEach((wysiwyg) => {
+                const quill = new Quill(wysiwyg, {
+                    theme: 'snow'
+                });
+
+                quill.to = wysiwyg.dataset.to;
+                quills.push(quill);
+            });
+
+            createForm.addEventListener('submit', () => {
+                quills.forEach((quill) => {
+                    const input = document.getElementById(quill.to);
+                    input.value = quill.getSemanticHTML();
+                });
+            });
+        </script>
+    @endpush
+
 </x-layout>

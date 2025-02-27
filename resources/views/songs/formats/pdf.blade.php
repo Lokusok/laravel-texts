@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Text</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    @vite(['resources/css/app.css'])
 </head>
 <body>
     <div class="p-[30px]">
@@ -17,7 +18,7 @@
         <div class="flex flex-col gap-y-[30px]">
             @foreach ($song->quatrains as $quatrain)
                 <div>
-                    <div>{{ $quatrain['body'] }}</div>
+                    <div>{!! $quatrain['body'] !!}</div>
                 </div>
             @endforeach
         </div>
