@@ -2,9 +2,10 @@ setup:
 	docker compose up --build -d
 	cp .env.example .env
 	composer install
+	npm i
 	php artisan key:generate
 	php artisan migrate --seed
 
 run:
-	php artisan serve &
-	npm i && npm run dev
+	npm run dev &
+	php artisan serve
