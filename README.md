@@ -1,6 +1,6 @@
 ## CRUD с экспортом моделей в другие форматы
 
-- Экспорт в PDF / DOCX
+- Экспорт в PDF / DOCX (Кириллица также поддерживается)
 - Загрузка архива
 
 ### Для входа:
@@ -9,9 +9,17 @@
 
 ### Чтобы начать:
 - `docker compose up --build -d`
+- `cp .env.example .env`
+- `composer install`
+- `php artisan key:generate`
+- `php artisan migrate --seed`
 - `php artisan serve`
 - `npm i && npm run dev`
-- `php artisan migrate --seed`
+
+Или:
+
+- `make setup`
+- `make run`
 
 ## Использованные технологии:
 
